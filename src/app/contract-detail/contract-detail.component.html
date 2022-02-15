@@ -1,0 +1,69 @@
+<mat-accordion *ngIf="!contract">
+    <mat-expansion-panel [expanded]="false">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                General Information
+            </mat-panel-title>
+            <mat-panel-description>
+                This is not a contract address.
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        Please check other tabs for more information.
+    </mat-expansion-panel>
+</mat-accordion>
+
+<mat-accordion *ngIf="contract">
+    <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                General Information
+            </mat-panel-title>
+            <mat-panel-description>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-list>
+            <mat-list-item>
+                <mat-icon mat-list-icon>data_usage</mat-icon>
+                <div mat-line>GID</div>
+                <div mat-line>{{ contract.gid }}</div>
+            </mat-list-item>
+            <mat-list-item>
+                <mat-icon mat-list-icon>sync_alt</mat-icon>
+                <div mat-line>Seed Count</div>
+                <div mat-line>{{ contract.seedCount }}</div>
+            </mat-list-item>
+            <mat-list-item>
+                <mat-icon mat-list-icon>account_balance</mat-icon>
+                <div mat-line>Confirm Time</div>
+                <div mat-line>{{ contract.confirmTime }}</div>
+            </mat-list-item>
+            <mat-list-item>
+                <mat-icon mat-list-icon>how_to_vote</mat-icon>
+                <div mat-line>Quota Ratio</div>
+                <div mat-line>{{ contract.quotaRatio }}</div>
+            </mat-list-item>
+            <mat-list-item>
+                <mat-icon mat-list-icon>casino</mat-icon>
+                <div mat-line>Random Degree</div>
+                <div mat-line>{{ contract.randomDegree }}</div>
+            </mat-list-item>
+            <mat-list-item>
+                <mat-icon mat-list-icon>hourglass_full</mat-icon>
+                <div mat-line>Response Latency</div>
+                <div mat-line>{{ contract.responseLatency }}</div>
+            </mat-list-item>
+        </mat-list>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Contract Code Hex
+            </mat-panel-title>
+            <mat-panel-description>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p class="wrap-code">
+            {{ decodeContractCodeBase64ToHex(contract.code) }}
+        </p>
+    </mat-expansion-panel>
+</mat-accordion>

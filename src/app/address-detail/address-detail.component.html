@@ -1,0 +1,142 @@
+<mat-card>
+    <mat-card-title>
+        Address
+    </mat-card-title>
+    <mat-card-subtitle>
+        {{ address }}
+        <mat-chip-list class="inline">
+            <mat-chip color="accent" selected>Account</mat-chip>
+        </mat-chip-list>
+    </mat-card-subtitle>
+</mat-card>
+
+<mat-tab-group>
+    <mat-tab label="Summary">
+        <ng-template matTabContent>
+            <mat-list *ngIf="account">
+                <mat-list-item>
+                    <mat-icon mat-list-icon>tag</mat-icon>
+                    <div mat-line>Address</div>
+                    <div mat-line>{{ account.address }}</div>
+                </mat-list-item>
+                <mat-list-item>
+                    <mat-icon mat-list-icon>sync_alt</mat-icon>
+                    <div mat-line>Trasnactions</div>
+                    <div mat-line>{{ account.blockCount }}</div>
+                </mat-list-item>
+                <mat-list-item>
+                    <mat-icon mat-list-icon>data_usage</mat-icon>
+                    <div mat-line>Quota</div>
+                    <div mat-line>{{ account.currentQuota }} </div>
+                </mat-list-item>
+                <mat-list-item>
+                    <mat-icon mat-list-icon>account_balance</mat-icon>
+                    <div mat-line>VITE Balance</div>
+                    <div mat-line>{{ getTotalBalance(account) | decimalPoint:18 }} VITE</div>
+                </mat-list-item>
+                <mat-list-item>
+                    <mat-icon mat-list-icon>how_to_vote</mat-icon>
+                    <div mat-line>Vote Node</div>
+                    <div mat-line>{{ sbpVoted?.blockProducerName }} </div>
+                </mat-list-item>
+                <mat-list-item>
+                    <mat-icon mat-list-icon>ballot</mat-icon>
+                    <div mat-line>Total Votes</div>
+                    <div mat-line>
+                        <div *ngIf="sbpVoted">
+                            {{ sbpVoted.votes | decimalPoint:18 }}
+                        </div>
+                    </div>
+                </mat-list-item>
+                <mat-list-item>
+                    <mat-icon mat-list-icon>widgets</mat-icon>
+                    <div mat-line>Block Count</div>
+                    <div mat-line>{{ account.blockCount }}</div>
+                </mat-list-item>
+            </mat-list>
+        </ng-template>
+    </mat-tab>
+
+    <mat-tab label="Token Balance">
+        <ng-template matTabContent>
+            <div style="display: none;">
+                {{ loadBalance() }}
+            </div>
+            <table mat-table [dataSource]="accountBalances" class="mat-elevation-z8 full-width-table">
+
+                <!-- Token Symbol Column -->
+                <ng-container matColumnDef="tokenSymbol">
+                    <th mat-header-cell *matHeaderCellDef> Token </th>
+                    <td mat-cell *matCellDef="let row"> {{row.tokenInfo.tokenSymbol}} </td>
+                </ng-container>
+
+                <!-- Token ID Column -->
+                <ng-container matColumnDef="tokenId">
+                    <th mat-header-cell *matHeaderCellDef> Token ID </th>
+                    <td mat-cell *matCellDef="let row"> {{row.tokenId}} </td>
+                </ng-container>
+
+                <!-- Decimals Column -->
+                <ng-container matColumnDef="decimals">
+                    <th mat-header-cell *matHeaderCellDef> Decimals </th>
+                    <td mat-cell *matCellDef="let row"> {{row.tokenInfo.decimals}} </td>
+                </ng-container>
+
+                <!-- Wallet Balance Column -->
+                <ng-container matColumnDef="balance">
+                    <th mat-header-cell *matHeaderCellDef> Wallet Balance </th>
+                    <td mat-cell *matCellDef="let row"> {{row.balance | decimalPoint:row.tokenInfo.decimals}} </td>
+                </ng-container>
+
+                <!-- Dex Available Column -->
+                <ng-container matColumnDef="dexAvailableBalance">
+                    <th mat-header-cell *matHeaderCellDef> Dex Available </th>
+                    <td mat-cell *matCellDef="let row"> {{row.tokenInfo.dexAvailableBalance}} </td>
+                </ng-container>
+
+                <!-- Dex Locked Column -->
+                <ng-container matColumnDef="dexLockedBalance">
+                    <th mat-header-cell *matHeaderCellDef> Dex Locked </th>
+                    <td mat-cell *matCellDef="let row"> {{row.tokenInfo.dexLockedBalance}} </td>
+                </ng-container>
+
+                <!-- Total Balance Column -->
+                <!-- todo: add total balance function  -->
+                <ng-container matColumnDef="totalBalance">
+                    <th mat-header-cell *matHeaderCellDef> Total Balance </th>
+                    <td mat-cell *matCellDef="let row"> {{ getTotalBalance(row) }} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="accountBalanceDisplayColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: accountBalanceDisplayColumns;"
+                    (click)="gotoTransactionDetail(row.tokenId)"></tr>
+            </table>
+        </ng-template>
+    </mat-tab>
+
+    <mat-tab label="Trasnactions">
+        <ng-template matTabContent>
+            <app-transaction-table [accountAddress]="address"></app-transaction-table>
+        </ng-template>
+    </mat-tab>
+
+    <mat-tab label="Unreceived Trasnactions">
+        <ng-template matTabContent>
+            <app-transaction-table [accountAddress]="address" [filter]="'unreceived'" [sortable]="false">
+            </app-transaction-table>
+        </ng-template>
+    </mat-tab>
+
+    <mat-tab label="Snapshot Blocks">
+        <ng-template matTabContent>
+            <app-snapshot-table [account]="address"></app-snapshot-table>
+        </ng-template>
+    </mat-tab>
+
+    <mat-tab label="Contract">
+        <ng-template matTabContent>
+            <app-contract-detail></app-contract-detail>
+        </ng-template>
+    </mat-tab>
+
+</mat-tab-group>

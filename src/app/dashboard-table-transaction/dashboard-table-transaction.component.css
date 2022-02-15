@@ -1,0 +1,20 @@
+.txn-list {
+  text-align: left;
+  overflow-y: hidden;
+}
+
+.address-tooltip {
+  max-width: unset !important;
+}
+
+mat-list-item:hover {
+  background-color: #ae52d4;
+  color: #fff;
+  cursor: pointer;
+}
+
+.refresh-indicator {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}

@@ -1,0 +1,51 @@
+<div class="mat-elevation-z8">
+  <div class="spinner-container" *ngIf="dataSource.loading$ | async">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <table mat-table class="full-width-table" matSort aria-label="Elements" [dataSource]="dataSource"
+    [matSortActive]="DEFAULT_SORT_FIELD" [matSortDirection]="DEFAULT_ORDER">
+    <!-- Id Column -->
+    <ng-container matColumnDef="tokenId">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Token ID</th>
+      <td mat-cell *matCellDef="let row">{{row.tokenId}}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="tokenName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+      <td mat-cell *matCellDef="let row">{{row.tokenName}}</td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="tokenSymbol">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Symbol</th>
+      <td mat-cell *matCellDef="let row">{{row.tokenSymbol}}</td>
+    </ng-container>
+
+    <!-- Decimal Column -->
+    <ng-container matColumnDef="decimals">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Decimals</th>
+      <td mat-cell *matCellDef="let row">{{row.decimals}}</td>
+    </ng-container>
+
+    <!-- Supply Column -->
+    <ng-container matColumnDef="totalSupply">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Supply</th>
+      <td mat-cell *matCellDef="let row">{{row.totalSupply|decimalPoint:row.decimals}}</td>
+    </ng-container>
+
+    <!-- Owner Column -->
+    <ng-container matColumnDef="owner">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Owner</th>
+      <td mat-cell *matCellDef="let row">{{row.owner}}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="gotoTransactionDetail(row.tokenId)"></tr>
+  </table>
+
+  <mat-paginator #paginator [length]="dataSource?.tokenCount" [pageIndex]="0" [pageSize]="DEFAULT_PAGE_SIZE"
+    [pageSizeOptions]="[5, 10, 20, 100]">
+  </mat-paginator>
+</div>

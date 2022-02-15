@@ -1,0 +1,87 @@
+<mat-card>
+    <mat-card-title>
+        Transaction Detail
+    </mat-card-title>
+</mat-card>
+
+<mat-list>
+    <mat-list-item>
+        <mat-icon mat-list-icon>tag</mat-icon>
+        <div mat-line>Hash</div>
+        <div mat-line>{{ transaction.hash }}</div>
+    </mat-list-item>
+    <mat-list-item *ngIf="transaction.receiveBlockHash">
+        <mat-icon mat-list-icon>call_received</mat-icon>
+        <div mat-line>Receive Block Hash</div>
+        <div mat-line>
+            <a [routerLink]="['/transaction', transaction.receiveBlockHash]">{{ transaction.receiveBlockHash}}</a>
+        </div>
+    </mat-list-item>
+    <mat-list-item *ngIf="transaction.sendBlockHash">
+        <mat-icon mat-list-icon>call_made</mat-icon>
+        <div mat-line>Send Block Hash</div>
+        <div mat-line><a [routerLink]="['/transaction', transaction.sendBlockHash]">{{ transaction.sendBlockHash }}</a>
+        </div>
+    </mat-list-item>
+    <mat-list-item>
+        <mat-icon mat-list-icon>category</mat-icon>
+        <div mat-line>Type</div>
+        <div mat-line>{{ transaction.blockType | transactionTypeName }} ({{ transaction.blockType }})</div>
+    </mat-list-item>
+    <mat-list-item>
+        <mat-icon mat-list-icon>network_check</mat-icon>
+        <div mat-line>Status</div>
+        <div mat-line>{{ getTransactionStatus(transaction) }}</div>
+    </mat-list-item>
+    <mat-list-item>
+        <mat-icon mat-list-icon>check</mat-icon>
+        <div mat-line>Confirmation</div>
+        <div mat-line>{{ transaction.confirmations }}</div>
+    </mat-list-item>
+    <mat-list-item>
+        <mat-icon mat-list-icon>photo_camera</mat-icon>
+        <div mat-line>First Snapshot</div>
+        <div mat-line>Hash: {{ transaction.firstSnapshotHash }}</div>
+    </mat-list-item>
+    <mat-list-item>
+        <mat-icon mat-list-icon>create</mat-icon>
+        <div mat-line>Producer</div>
+        <div mat-line>{{ transaction.producer }}</div>
+    </mat-list-item>
+    <mat-list-item>
+        <mat-icon mat-list-icon>schedule</mat-icon>
+        <div mat-line>Age</div>
+        <div mat-line>{{ transaction.timestamp * 1000 | timeToNow:'minute' }} minutes ago ({{ transaction.timestamp *
+            1000 |
+            date:'yyyy-MM-dd HH:mm:ss' }})</div>
+    </mat-list-item>
+    <mat-list-item>
+        <mat-icon mat-list-icon>people</mat-icon>
+        <div mat-line>Sender and Receiver</div>
+        <div mat-line>From: <a [routerLink]="['/address', transaction.fromAddress]"> {{ transaction.fromAddress }}</a>
+        </div>
+        <div mat-line>To: <a [routerLink]="['/address', transaction.toAddress]">{{ transaction.toAddress }}</a></div>
+    </mat-list-item>
+    <mat-list-item>
+        <mat-icon mat-list-icon>generating_tokens</mat-icon>
+        <div mat-line>Token</div>
+        <div mat-line>Name / Symbol: {{ transaction.token.tokenName }} / {{ transaction.token.tokenSymbol }}</div>
+        <div mat-line>Amount / Fee: {{ transaction.amount | decimalPoint:18 }} / {{ transaction.fee | decimalPoint:18 }}
+        </div>
+    </mat-list-item>
+    <mat-list-item *ngIf="transaction.triggeredSendBlockList?.length">
+        <mat-icon mat-list-icon>published_with_changes</mat-icon>
+        <div mat-line>Triggered Send Blocks</div>
+        <div mat-line *ngFor="let subtxn of transaction.triggeredSendBlockList">
+            <a [routerLink]="['/transaction', subtxn.hash]">
+                {{ subtxn.hash }}
+            </a>
+        </div>
+    </mat-list-item>
+    <mat-list-item>
+        <mat-icon mat-list-icon>note_alt</mat-icon>
+        <div mat-line>Data</div>
+        <div mat-line>Base64: {{ transaction.data }} </div>
+        <div mat-line>Decoded (UTF16): {{ decodeData(transaction.data) }} </div>
+    </mat-list-item>
+</mat-list>

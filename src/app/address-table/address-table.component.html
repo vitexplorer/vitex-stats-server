@@ -1,0 +1,69 @@
+<div class="mat-elevation-z8">
+  <div class="spinner-container" *ngIf="dataSource.loading$ | async">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <table mat-table class="full-width-table" matSort aria-label="Elements" [dataSource]="dataSource"
+    matSortActive="viteBalance" matSortDirection="desc">
+    <!-- Address Column -->
+    <ng-container matColumnDef="address">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Address</th>
+      <td mat-cell *matCellDef="let row">{{row.address}}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let row">{{getSBPName(row.address)}}</td>
+    </ng-container>
+
+    <!-- Balance Column -->
+    <ng-container matColumnDef="viteBalance">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>VITE Balance</th>
+      <td mat-cell *matCellDef="let row">{{ getVitexBalance(row)|decimalPoint:18 }}</td>
+    </ng-container>
+
+    <!-- Current Quota Column -->
+    <ng-container matColumnDef="currentQuota">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Current Quota</th>
+      <td mat-cell *matCellDef="let row">{{row.currentQuota}}</td>
+    </ng-container>
+
+    <!-- Staking Amount Column -->
+    <ng-container matColumnDef="stakingAmount">
+      <th mat-header-cell *matHeaderCellDef>Staking Amount</th>
+      <td mat-cell *matCellDef="let row">{{getSBPStakeAmount(row.address)}}</td>
+    </ng-container>
+
+    <!-- Total Balance Column -->
+    <ng-container matColumnDef="totalBalance">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Balance</th>
+      <td mat-cell *matCellDef="let row">{{getVitexBalance(row)|decimalPoint:18}}</td>
+    </ng-container>
+
+
+    <!-- Percentage Column -->
+    <ng-container matColumnDef="percentage">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Percentage</th>
+      <td mat-cell *matCellDef="let row">
+        <div *ngIf="viteToken">
+          {{getVitePercentage(row) | percent:'.5':'en'}}
+        </div>
+      </td>
+    </ng-container>
+
+    <!-- Transaction Count Column -->
+    <!-- todo: confirm whether block count is transaction count  -->
+    <ng-container matColumnDef="txnCount">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Transction Count</th>
+      <td mat-cell *matCellDef="let row">{{row.blockCount}}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="gotoAddressDetail(row.address)"></tr>
+  </table>
+
+  <mat-paginator #paginator [length]="dataSource?.accountsCount" [pageIndex]="0" [pageSize]="20"
+    [pageSizeOptions]="[5, 10, 20, 50]">
+  </mat-paginator>
+</div>

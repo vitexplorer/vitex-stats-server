@@ -1,0 +1,14 @@
+<div class="address-toolbar">
+  <mat-toolbar>
+    <span>Address</span>
+    <span class="toolbar-spacer"></span>
+    <mat-form-field class="example-form-field">
+      <mat-label>Search...</mat-label>
+      <input matInput type="text" #input>
+      <button mat-button *ngIf="searchKey" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </mat-toolbar>
+</div>
+<app-address-table [searchKey]="searchKey"></app-address-table>

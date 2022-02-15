@@ -1,0 +1,97 @@
+<div class="mat-elevation-z8">
+  <table mat-table class="full-width-table" matSort aria-label="Elements">
+    <!-- Date Column -->
+    <ng-container matColumnDef="timestamp">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Timestamp</th>
+      <td mat-cell *matCellDef="let row" matTooltip="{{row.timestamp * 1000 | timeToNow:'seconds'}}  seconds ago"
+        [matTooltipPosition]="'above'" matTooltipClass="address-tooltip">
+        {{row.timestamp * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}
+      </td>
+    </ng-container>
+
+    <!-- Height Column -->
+    <ng-container matColumnDef="height">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Height</th>
+      <td mat-cell *matCellDef="let row">{{row.height}}</td>
+    </ng-container>
+
+    <!-- Hash Column -->
+    <ng-container matColumnDef="hash">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Hash</th>
+      <td mat-cell *matCellDef="let row" matTooltip="{{row.hash}}" [matTooltipPosition]="'above'"
+        matTooltipClass="address-tooltip">
+        {{row.hash|addressFormat:20}}
+      </td>
+    </ng-container>
+
+    <!-- Amount Column -->
+    <ng-container matColumnDef="amount">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header disabled>Amount</th>
+      <td mat-cell *matCellDef="let row">{{row.amount | decimalPoint:18}}</td>
+    </ng-container>
+
+    <!-- Fee Column -->
+    <ng-container matColumnDef="fee">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header disabled>Fee</th>
+      <td mat-cell *matCellDef="let row">{{row.fee | decimalPoint:18}}</td>
+    </ng-container>
+
+    <!-- Sender Column -->
+    <ng-container matColumnDef="fromAddress">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Sender</th>
+      <td mat-cell *matCellDef="let row" matTooltip="{{row.fromAddress}}" [matTooltipPosition]="'above'"
+        matTooltipClass="address-tooltip">
+        {{row.fromAddress|addressFormat:20}}
+      </td>
+    </ng-container>
+
+    <!-- Receiver Column -->
+    <ng-container matColumnDef="toAddress">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Receiver</th>
+      <td mat-cell *matCellDef="let row" matTooltip="{{row.toAddress}}" [matTooltipPosition]="'above'"
+        matTooltipClass="address-tooltip">
+        {{row.toAddress|addressFormat:20}}
+      </td>
+    </ng-container>
+
+    <!-- Confirmation Column -->
+    <ng-container matColumnDef="confirmations">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header disabled>Confirmations</th>
+      <td mat-cell *matCellDef="let row">{{row.confirmations}}</td>
+    </ng-container>
+
+    <!-- Snapshot Column -->
+    <ng-container matColumnDef="snapshotHash">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header disabled>Snapshot</th>
+      <td mat-cell *matCellDef="let row" matTooltip="{{row.firstSnapshotHash}}" [matTooltipPosition]="'above'"
+        matTooltipClass="address-tooltip">
+        <div *ngIf="row.firstSnapshotHash">
+          {{row.firstSnapshotHash|addressFormat:20}}
+        </div>
+      </td>
+    </ng-container>
+
+    <!-- Status Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header disabled>Status</th>
+      <td mat-cell *matCellDef="let row">
+        {{transactionStatus(row)}}
+      </td>
+    </ng-container>
+
+    <!-- Note Column -->
+    <ng-container matColumnDef="note">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header disabled>Note</th>
+      <td mat-cell *matCellDef="let row">
+        {{row.note}}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="gotoTransactionDetail(row.hash)"></tr>
+  </table>
+
+  <mat-paginator #paginator [length]="dataSource?.transactionCount" [pageIndex]="0" [pageSize]="20"
+    [pageSizeOptions]="[5, 10, 20, 50,100]">
+  </mat-paginator>
+</div>

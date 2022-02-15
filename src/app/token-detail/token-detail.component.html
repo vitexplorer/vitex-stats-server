@@ -1,0 +1,23 @@
+<mat-card *ngIf="token">
+  <h1>Token Detail - {{token.tokenName}} ({{token.tokenSymbol}})</h1>
+  <mat-card-content>
+    Decimals: {{token.decimals}}
+    <br>
+    Total Supply: {{token.totalSupply | decimalPoint:token.decimals}}
+    <br>
+    Owner: {{token.owner}}
+  </mat-card-content>
+</mat-card>
+
+<mat-tab-group>
+  <mat-tab label="Transactions">
+    <ng-template matTabContent>
+      <app-token-transaction-table></app-token-transaction-table>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Top Holders">
+    <ng-template matTabContent>
+      <app-token-holder-balance-table></app-token-holder-balance-table>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

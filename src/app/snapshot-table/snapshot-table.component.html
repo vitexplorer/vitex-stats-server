@@ -1,0 +1,42 @@
+<div class="mat-elevation-z8">
+    <table mat-table class="full-width-table" matSort aria-label="Elements" [dataSource]="dataSource">
+        <!-- Block Column -->
+        <ng-container matColumnDef="hash">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Block</th>
+            <td mat-cell *matCellDef="let row" matTooltip="{{row.hash }}" [matTooltipPosition]="'above'"
+                matTooltipClass="address-tooltip">{{ row.hash }}
+            </td>
+        </ng-container>
+
+        <!-- Transaction Column -->
+        <ng-container matColumnDef="transaction">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Transactions</th>
+            <td mat-cell *matCellDef="let row"> transactions ? </td>
+        </ng-container>
+
+        <!-- SBP Column -->
+        <ng-container matColumnDef="producer">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>SBP</th>
+            <td mat-cell *matCellDef="let row" matTooltip="{{row.fromAddress}}" [matTooltipPosition]="'above'"
+                matTooltipClass="address-tooltip">
+                {{ row.producer }}
+            </td>
+        </ng-container>
+
+        <!-- Date Column -->
+        <ng-container matColumnDef="timestamp">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+            <td mat-cell *matCellDef="let row" matTooltip="{{row.timestamp * 1000 | timeToNow:'seconds'}}  seconds ago"
+                [matTooltipPosition]="'above'" matTooltipClass="address-tooltip">
+                {{row.timestamp * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}
+            </td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator #paginator [length]="dataSource.snapshotCount" [pageIndex]="0" [pageSize]="20" [pageSizeOptions]="[5, 10, 20, 50]">
+    </mat-paginator>
+</div>

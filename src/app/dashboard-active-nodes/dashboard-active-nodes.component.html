@@ -1,0 +1,10 @@
+<mat-list class="active-nodes-list">
+    <mat-list-item *ngFor="let node of nodes">
+        <mat-icon mat-list-icon>
+            how_to_vote
+        </mat-icon>
+        <div mat-line>Name: {{ node.name }} </div>
+        <div mat-line>Address: {{ node.blockProducingAddress }} </div>
+        <div mat-line *ngIf="node.votes">Votes: {{ node.votes | decimalPoint:18}} </div>
+    </mat-list-item>
+</mat-list>

@@ -1,0 +1,22 @@
+.app-container {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.app-sidenav-container {
+    flex: 1;
+}
+
+mat-sidenav mat-icon {
+    padding-right: 0.5em;
+}
+
+/* ngx-charts show white texts */
+::ng-deep .ngx-charts text {
+    fill: #fff !important;
+}

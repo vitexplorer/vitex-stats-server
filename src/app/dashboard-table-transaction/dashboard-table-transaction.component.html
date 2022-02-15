@@ -1,0 +1,24 @@
+<mat-card-header>
+  <mat-card-title>
+    New Transaction
+    <mat-progress-spinner class="refresh-indicator" [color]="'primary'" [mode]="'determinate'" [diameter]="30"
+      [strokeWidth]="5" [value]="refreshProgress">
+    </mat-progress-spinner>
+  </mat-card-title>
+</mat-card-header>
+<mat-card-content class="dashboard-card-content">
+  <mat-list class="txn-list">
+    <mat-list-item *ngFor="let txn of transactions" (click)="gotoTransactionDetail(txn.hash)">
+      <mat-icon mat-list-icon matBadge="{{ txn.amount | decimalPoint:txn.token.decimals }}"
+        matTooltipClass="address-tooltip"
+        matTooltip="{{ txn.amount | decimalPoint:txn.token.decimals }} {{ txn.token.tokenSymbol }}">
+        local_offer
+      </mat-icon>
+      <div mat-line matTooltip="{{ txn.fromAddress }}" matTooltipClass="address-tooltip">From: {{ txn.fromAddress }}
+      </div>
+      <div mat-line matTooltip="{{ txn.toAddress }}" matTooltipClass="address-tooltip">To: {{ txn.toAddress }} </div>
+      <div mat-line matTooltip="{{ txn.timestamp * 1000 | date:'yyyy-MM-dd HH:mm:ss' }}">{{ txn.timestamp * 1000 |
+        timeToNow:'second' }} seconds ago </div>
+    </mat-list-item>
+  </mat-list>
+</mat-card-content>

@@ -1,0 +1,14 @@
+<div class="tokens-toolbar">
+  <mat-toolbar>
+    <span>Tokens</span>
+    <span class="toolbar-spacer"></span>
+    <mat-form-field class="search-box">
+      <mat-label>Search...</mat-label>
+      <input matInput type="text" [(ngModel)]="searchKeyword">
+      <button *ngIf="searchKeyword" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </mat-toolbar>
+</div>
+<app-token-table [searchKeyword]="searchKeyword"></app-token-table>

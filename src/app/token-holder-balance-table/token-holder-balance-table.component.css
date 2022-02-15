@@ -1,0 +1,13 @@
+.full-width-table {
+    width: 100%;
+}
+
+.mat-row:hover {
+    background-color: #ae52d4;
+    color: #fff;
+    cursor: pointer;
+}
+
+.mat-cell {
+    padding: 8px 8px 8px 0;
+}
