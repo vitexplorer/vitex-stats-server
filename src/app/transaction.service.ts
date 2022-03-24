@@ -13,27 +13,27 @@ export class TransactionService {
 
 
   getTransactions(pageIdx: number, pageSize: number, order: string = 'desc', sort_field: string = 'timestamp'): Observable<PageTransaction> {
-    const reqUrl: string = environment.backendURL + '/ledger/get_account_blocks/' + order + '/' + sort_field + '/' + pageIdx + '/' + pageSize;
+    const reqUrl: string = environment.backendURL() + '/ledger/get_account_blocks/' + order + '/' + sort_field + '/' + pageIdx + '/' + pageSize;
     return this.http.get<PageTransaction>(reqUrl);
   }
 
   getTokenTransactions(tokenId: string, pageIdx: number, pageSize: number, order: string = 'desc', sort_field: string = 'timestamp'): Observable<PageTransaction> {
-    const reqUrl: string = environment.backendURL + '/ledger/get_account_block_by_token/' + tokenId + '/' + order + '/' + sort_field + '/' + pageIdx + '/' + pageSize;
+    const reqUrl: string = environment.backendURL() + '/ledger/get_account_block_by_token/' + tokenId + '/' + order + '/' + sort_field + '/' + pageIdx + '/' + pageSize;
     return this.http.get<PageTransaction>(reqUrl);
   }
 
   getAccountTransactions(address: string, pageIdx: number, pageSize: number, order: string = 'desc', sort_field: string = 'timestamp'): Observable<PageTransaction> {
-    const reqUrl: string = environment.backendURL + '/ledger/get_account_blocks_by_account/' + address + '/' + order + '/' + sort_field + '/' + pageIdx + '/' + pageSize;
+    const reqUrl: string = environment.backendURL() + '/ledger/get_account_blocks_by_account/' + address + '/' + order + '/' + sort_field + '/' + pageIdx + '/' + pageSize;
     return this.http.get<PageTransaction>(reqUrl);
   }
 
   getAccountUnreceivedTransactions(address: string, pageIdx: number, pageSize: number, order: string = 'desc', sort_field: string = 'timestamp'): Observable<PageTransaction> {
-    const reqUrl: string = environment.backendURL + '/ledger/get_unreceived_account_blocks_by_account/' + address + '/' + order + '/' + sort_field + '/' + pageIdx + '/' + pageSize;
+    const reqUrl: string = environment.backendURL() + '/ledger/get_unreceived_account_blocks_by_account/' + address + '/' + order + '/' + sort_field + '/' + pageIdx + '/' + pageSize;
     return this.http.get<PageTransaction>(reqUrl);
   }
 
   getTransactionDetail(hash: string): Observable<PageTransactionDetail> {
-    const reqUrl: string = environment.backendURL + '/ledger/get_complete_account_block_by_hash/' + hash;
+    const reqUrl: string = environment.backendURL() + '/ledger/get_complete_account_block_by_hash/' + hash;
     return this.http.get<PageTransactionDetail>(reqUrl);
   }
 

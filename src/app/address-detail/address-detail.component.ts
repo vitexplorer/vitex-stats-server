@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { getVitexAccountBalance, VitexAccountBalancePerToken, VitexAccountDetail } from '../account';
 import { AccountService } from '../account.service';
-import { SBPVoting } from '../sbp';
+import { ContractService } from '../contract.service';
+import { SBP, SBPVoting } from '../sbp';
 import { SbpService } from '../sbp.service';
 
 @Component({
@@ -18,17 +19,21 @@ export class AddressDetailComponent implements OnInit {
   sbpVoted: SBPVoting | null = null;
   accountBalanceDisplayColumns = ['tokenSymbol', 'tokenId', 'decimals', 'balance',];
   // omitted columns: 'dexAvailableBalance', 'dexLockedBalance', 'totalBalance'
+  addressType: string = '';
+  sbpInfo: SBP | undefined = undefined;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
     private accountService: AccountService,
-    private sbpService: SbpService) {
-  }
+    private sbpService: SbpService,
+    private contractService: ContractService) { }
+
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.address = params.address;
       this.loadAccount();
+      this.loadSBPInfo();
     });
   }
 
@@ -38,6 +43,17 @@ export class AddressDetailComponent implements OnInit {
     );
     this.sbpService.getVotedSBP(this.address).subscribe(
       sbp => this.sbpVoted = sbp
+    );
+    this.contractService.getContract(this.address).subscribe(
+      contractResp => {
+        if (contractResp.err === 'ok') {
+          this.addressType = 'contract';
+        } else if (this.sbpInfo !== undefined) {
+          this.addressType = 'sbp';
+        } else {
+          this.addressType = 'account';
+        }
+      }
     );
 
   }
@@ -52,6 +68,17 @@ export class AddressDetailComponent implements OnInit {
       resp => this.accountBalances = resp.result.balances
     );
     this.balanceLoaded = true;
+  }
+
+  loadSBPInfo(): void {
+    this.sbpService.getSBPMap().subscribe(
+      sbpMap => {
+        this.sbpInfo = sbpMap.get(this.address);
+        if (this.sbpInfo) {
+          this.addressType = 'sbp';
+        }
+      }
+    );
   }
 
   gotoTransactionDetail(tokenId: string) {

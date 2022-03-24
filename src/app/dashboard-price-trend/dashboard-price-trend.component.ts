@@ -30,7 +30,7 @@ export class DashboardPriceTrendComponent implements OnInit {
     let endDate = new Date();
     // 2 week ago
     let startDate = new Date(endDate.getTime() - (1000 * 60 * 60 * 24 * 14));
-    this.statisticService.getMarketStatistic(startDate, endDate).pipe(
+    this.statisticService.getMarketStatistic(startDate, endDate, 'usd').pipe(
       catchError(() => of({
         'prices': [[startDate.getTime(), 1]],
         'market_caps': [[startDate.getTime(), 1]],

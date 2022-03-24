@@ -13,8 +13,6 @@ mat-list-item:hover {
   cursor: pointer;
 }
 
-.refresh-indicator {
-  position: absolute;
-  top: 5px;
-  right: 10px;
+.mat-card-content {
+  margin-bottom: 10px;
 }

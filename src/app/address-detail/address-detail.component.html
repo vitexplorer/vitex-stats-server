@@ -4,8 +4,14 @@
     </mat-card-title>
     <mat-card-subtitle>
         {{ address }}
-        <mat-chip-list class="inline">
+        <mat-chip-list class="inline" *ngIf="addressType=='account'">
             <mat-chip color="accent" selected>Account</mat-chip>
+        </mat-chip-list>
+        <mat-chip-list class="inline" *ngIf="addressType=='contract'">
+            <mat-chip color="primary" selected>Contract</mat-chip>
+        </mat-chip-list>
+        <mat-chip-list class="inline" *ngIf="addressType=='sbp'">
+            <mat-chip color="warn" selected>SBP</mat-chip>
         </mat-chip-list>
     </mat-card-subtitle>
 </mat-card>
@@ -54,6 +60,106 @@
                     <div mat-line>{{ account.blockCount }}</div>
                 </mat-list-item>
             </mat-list>
+        </ng-template>
+    </mat-tab>
+
+    <mat-tab label="SBP" *ngIf="addressType=='sbp'">
+        <ng-template matTabContent>
+            <mat-list *ngIf="sbpInfo">
+                <mat-list-item>
+                    <mat-icon mat-list-icon>military_tech</mat-icon>
+                    <div mat-line>Rank</div>
+                    <div mat-line>{{ sbpInfo.rank }}</div>
+                </mat-list-item>
+                <mat-list-item>
+                    <mat-icon mat-list-icon>badge</mat-icon>
+                    <div mat-line>Name</div>
+                    <div mat-line>{{ sbpInfo.name }}</div>
+                </mat-list-item>
+                <mat-list-item>
+                    <mat-icon mat-list-icon>precision_manufacturing</mat-icon>
+                    <div mat-line>Block Producing Address</div>
+                    <div mat-line>{{ sbpInfo.blockProducingAddress }}</div>
+                </mat-list-item>
+                <mat-list-item>
+                    <mat-icon mat-list-icon>alternate_email</mat-icon>
+                    <div mat-line>Stake Address</div>
+                    <div mat-line>
+                        {{ sbpInfo.stakeAddress }}
+                    </div>
+                </mat-list-item>
+                <mat-list-item>
+                    <mat-icon mat-list-icon>view_agenda</mat-icon>
+                    <div mat-line>Stake Amount</div>
+                    <div mat-line>{{ sbpInfo.stakeAmount | decimalPoint:18 }}</div>
+                </mat-list-item>
+                <mat-list-item>
+                    <mat-icon mat-list-icon>how_to_vote</mat-icon>
+                    <div mat-line>Votes</div>
+                    <div mat-line>{{ sbpInfo.votes | decimalPoint:18 }}</div>
+                </mat-list-item>
+                <mat-list-item>
+                    <mat-icon mat-list-icon>line_weight</mat-icon>
+                    <div mat-line>Expiration Height</div>
+                    <div mat-line>{{ sbpInfo.expirationHeight }}</div>
+                </mat-list-item>
+                <mat-list-item>
+                    <mat-icon mat-list-icon>schedule</mat-icon>
+                    <div mat-line>Expiration Time</div>
+                    <div mat-line>{{ sbpInfo.expirationTime * 1000 | date:'yyyy-MM-dd HH:mm:ss' }} </div>
+                </mat-list-item>
+                <mat-list-item>
+                    <mat-icon mat-list-icon>watch_later</mat-icon>
+                    <div mat-line>Revoke Time</div>
+                    <div mat-line *ngIf="sbpInfo.revokeTime>0">{{ sbpInfo.revokeTime * 1000 | date:'yyyy-MM-dd HH:mm:ss'
+                        }} </div>
+                    <div mat-line *ngIf="sbpInfo.revokeTime==0">Never</div>
+                </mat-list-item>
+            </mat-list>
+            <mat-accordion *ngIf="sbpInfo?.reward">
+                <mat-expansion-panel [expanded]="false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Latest SBP Reward
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            Last updated at {{ account?.lastModified | date:'yyyy-MM-dd HH:mm:ss' }}
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <mat-list>
+                        <mat-list-item>
+                            <mat-icon mat-list-icon>check_circle_outline</mat-icon>
+                            <div mat-line>Produced Blocks</div>
+                            <div mat-line>{{ sbpInfo?.reward?.producedBlocks }}</div>
+                        </mat-list-item>
+                        <mat-list-item>
+                            <mat-icon mat-list-icon>receipt_long</mat-icon>
+                            <div mat-line>Target Blocks</div>
+                            <div mat-line>{{ sbpInfo?.reward?.targetBlocks }}</div>
+                        </mat-list-item>
+                        <mat-list-item>
+                            <mat-icon mat-list-icon>how_to_vote</mat-icon>
+                            <div mat-line>Voting Reward</div>
+                            <div mat-line>{{ sbpInfo?.reward?.votingReward | decimalPoint:18 }} VITE</div>
+                        </mat-list-item>
+                        <mat-list-item>
+                            <mat-icon mat-list-icon>precision_manufacturing</mat-icon>
+                            <div mat-line>Block Producing Reward</div>
+                            <div mat-line>{{ sbpInfo?.reward?.blockProducingReward | decimalPoint:18 }} VITE</div>
+                        </mat-list-item>
+                        <mat-list-item>
+                            <mat-icon mat-list-icon>functions</mat-icon>
+                            <div mat-line>Total Reward</div>
+                            <div mat-line>{{ sbpInfo?.reward?.totalReward | decimalPoint:18 }} VITE</div>
+                        </mat-list-item>
+                        <mat-list-item>
+                            <mat-icon mat-list-icon>outbox</mat-icon>
+                            <div mat-line>All Reward Withdrawed</div>
+                            <div mat-line>{{ sbpInfo?.reward?.allRewardWithdrawed }}</div>
+                        </mat-list-item>
+                    </mat-list>
+                </mat-expansion-panel>
+            </mat-accordion>
         </ng-template>
     </mat-tab>
 

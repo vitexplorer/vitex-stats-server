@@ -12,7 +12,7 @@ export class ContractService {
   constructor(private http: HttpClient) { }
 
   getContract(address: string): Observable<ContractResponse> {
-    const reqUrl: string = environment.backendURL + '/contract/get_contract_info/' + address;
+    const reqUrl: string = environment.backendURL() + '/contract/get_contract_info/' + address;
     return this.http.get<ContractResponse>(reqUrl);
   }
 }

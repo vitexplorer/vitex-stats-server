@@ -19,7 +19,6 @@ export class DashboardTableTransactionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.refresh();
     this.updateSub = interval(1000).subscribe((val) => {
       this.refresh();
     });
@@ -38,6 +37,12 @@ export class DashboardTableTransactionComponent implements OnInit {
     this.transactionService.getTransactions(0, 3).subscribe(
       transactionPage => this.transactions = transactionPage.accountBlocks
     );
+  }
+
+  ngOnDestroy(): void {
+    if (this.updateSub) {
+      this.updateSub.unsubscribe();
+    }
   }
 
 }

@@ -9,7 +9,7 @@ export interface SBP {
     votes: number | null;
     rank: number | null;
 
-    reward: SBPReward | null;
+    reward: SBPReward;
 };
 
 

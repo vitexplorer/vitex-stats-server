@@ -21,6 +21,7 @@ export class DashboardSupplyComponent implements OnInit {
     domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
   };
 
+  chartContainerClass = 'chart-container-hide';
 
   constructor(private statisticService: StatisticService,
     private elRef: ElementRef,
@@ -48,6 +49,11 @@ export class DashboardSupplyComponent implements OnInit {
         this.gaugeMax = Math.pow(10, Math.ceil(Math.log10(circulating_supply)));
       }
     )
+
+    setTimeout(() => {
+      this.chartContainerClass = 'chart-container-show';
+    }, 1000);
+
   }
 
   @HostListener('window:resize', ['$event'])

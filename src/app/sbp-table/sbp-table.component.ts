@@ -23,7 +23,7 @@ export class SbpTableComponent implements AfterViewInit, OnInit {
     private cd: ChangeDetectorRef) {
   }
   ngOnInit(): void {
-    this.sbpService.getSBP().subscribe(
+    this.sbpService.getSBPList().subscribe(
       tableItems => {
         this.dataSource.data = tableItems;
       }

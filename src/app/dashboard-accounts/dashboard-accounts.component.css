@@ -3,3 +3,13 @@ mat-list-item:hover {
     color: #fff;
     cursor: pointer;
 }
+
+.link-button {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+
+.mat-card-content {
+    margin-bottom: 10px;
+}

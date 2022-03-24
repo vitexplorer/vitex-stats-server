@@ -63,7 +63,7 @@ export class AddressTableComponent implements AfterViewInit, OnInit {
 
   ngOnInit(): void {
     this.dataSource.loadAccounts();
-    this.sbpService.getSBP().subscribe(sbps => {
+    this.sbpService.getSBPList().subscribe(sbps => {
       for (let sbp of sbps) {
         this.sbpCache.set(sbp.stakeAddress, sbp);
       }

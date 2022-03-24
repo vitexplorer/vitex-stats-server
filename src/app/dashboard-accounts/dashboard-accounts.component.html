@@ -1,13 +1,26 @@
-<mat-list class="active-account-list">
-    <mat-list-item *ngFor="let account of accounts" (click)="gotoAddressDetail(account.address)">
-        <mat-icon mat-list-icon>
-            account_balance
-        </mat-icon>
-        <!-- todo: add name tag function  -->
-        <!-- <div mat-line *ngIf="account.nameTag; else addressLine">{{ account.nameTag }} </div> -->
-        <div mat-line>{{ account.address }} </div>
-        <!-- todo: add wallet balance function -->
-        <div mat-line>Balance Wallet / Total: {{ getBalance(account) }} / {{ getBalance(account) }} </div>
-        <div mat-line>Transactions/Blocks: {{ account.blockCount }} </div>
-    </mat-list-item>
-</mat-list>
+<mat-card-header>
+    <mat-card-title>
+        Active Addresses
+        <button mat-icon-button class="link-button" (click)="gotoAddressList()">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+    </mat-card-title>
+</mat-card-header>
+<mat-card-content class="dashboard-card-content">
+    <mat-list class="active-account-list">
+        <mat-list-item *ngFor="let account of accounts" (click)="gotoAddressDetail(account.address)">
+            <mat-icon mat-list-icon>
+                account_balance
+            </mat-icon>
+            <!-- todo: add name tag function  -->
+            <!-- <div mat-line *ngIf="account.nameTag; else addressLine">{{ account.nameTag }} </div> -->
+            <div mat-line>{{ account.address }} </div>
+            <!-- todo: add wallet balance function -->
+            <div mat-line>Balance Wallet / Total: {{ getBalance(account) }} / {{ getBalance(account) }} </div>
+            <div mat-line>Transactions/Blocks: {{ account.blockCount }} </div>
+        </mat-list-item>
+    </mat-list>
+</mat-card-content>
+<mat-card-footer>
+    <mat-progress-bar mode="determinate" [value]="refreshProgress"></mat-progress-bar>
+</mat-card-footer>

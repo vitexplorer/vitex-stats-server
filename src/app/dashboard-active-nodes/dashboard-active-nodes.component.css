@@ -1,0 +1,21 @@
+.refresh-indicator {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+
+mat-list-item:hover {
+    background-color: #ae52d4;
+    color: #fff;
+    cursor: pointer;
+}
+
+.link-button {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+
+.mat-card-content {
+    margin-bottom: 10px;
+}

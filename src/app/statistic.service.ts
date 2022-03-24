@@ -16,17 +16,17 @@ export class StatisticService {
     const startDateStr = startDate.toISOString().substring(0, 10);
     const endDateStr = endDate.toISOString().substring(0, 10);
 
-    const reqUrl: string = environment.backendURL + '/statistic/get_daily_statistics/' +
+    const reqUrl: string = environment.backendURL() + '/statistic/get_daily_statistics/' +
       startDateStr + '/' + endDateStr;
     return this.http.get<DailyStatisticResponse>(reqUrl);
   };
 
 
-  getMarketStatistic(startDate: Date, endDate: Date): Observable<MarketStatResponse> {
+  getMarketStatistic(startDate: Date, endDate: Date, currency: string = 'btc'): Observable<MarketStatResponse> {
     const startDateTimestamp = startDate.getTime() / 1000;
     const endDateTimestamp = endDate.getTime() / 1000;
 
-    const reqUrl = environment.coinGeckoURL + '/coins/vite/market_chart/range?vs_currency=usd&from=' + startDateTimestamp + '&to=' + endDateTimestamp;
+    const reqUrl = environment.coinGeckoURL + '/coins/vite/market_chart/range?vs_currency=' + currency + '&from=' + startDateTimestamp + '&to=' + endDateTimestamp;
 
     return this.http.get<MarketStatResponse>(reqUrl);
 

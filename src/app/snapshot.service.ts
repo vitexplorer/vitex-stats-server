@@ -16,7 +16,7 @@ export class SnapshotService {
     sort_field: string = '',
     pageIdx: number = 0,
     pageSize: number = 20): Observable<PageSnapshot> {
-    const reqUrl: string = environment.backendURL + '/ledger/get_snapshot_blocks_by_address/' + address + '/' + order + '/' + sort_field + '/' + pageIdx + '/' + pageSize;
+    const reqUrl: string = environment.backendURL() + '/ledger/get_snapshot_blocks_by_address/' + address + '/' + order + '/' + sort_field + '/' + pageIdx + '/' + pageSize;
     return this.http.get<PageSnapshot>(reqUrl);
   }
 
@@ -25,11 +25,11 @@ export class SnapshotService {
     sort_field: string = 'height',
     pageIdx: number = 0,
     pageSize: number = 5): Observable<PageSnapshot> {
-    const reqUrl: string = environment.backendURL + '/ledger/get_snapshot_blocks/' + order + '/' + sort_field + '/' + pageIdx + '/' + pageSize;
+    const reqUrl: string = environment.backendURL() + '/ledger/get_snapshot_blocks/' + order + '/' + sort_field + '/' + pageIdx + '/' + pageSize;
     return this.http.get<PageSnapshot>(reqUrl);
   }
-  getLatestSnapshots(pageSize: number = 5): Observable<PageSnapshot> {
-    const reqUrl: string = environment.backendURL + '/ledger/get_latest_snapshot_blocks/' + pageSize;
+  getLatestSnapshots(pageSize: number = 3): Observable<PageSnapshot> {
+    const reqUrl: string = environment.backendURL() + '/ledger/get_latest_snapshot_blocks/' + pageSize;
     return this.http.get<PageSnapshot>(reqUrl);
   }
 }

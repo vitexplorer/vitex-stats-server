@@ -20,19 +20,19 @@ export class TokenService {
     searchKeyword: string = ''): Observable<TokenInfoList> {
     if (searchKeyword.length > 0) {
       // use search API
-      const reqUrl: string = environment.backendURL + '/contract/search_token_name/' + searchKeyword
+      const reqUrl: string = environment.backendURL() + '/contract/search_token_name/' + searchKeyword
         + '/' + sortOrder + '/' + sortColumn + '/' + pageIdx + '/' + pageSize;
       return this.http.get<TokenInfoList>(reqUrl);
     }
 
 
-    const reqUrl: string = environment.backendURL + '/contract/get_token_info_list/'
+    const reqUrl: string = environment.backendURL() + '/contract/get_token_info_list/'
       + '/' + sortOrder + '/' + sortColumn + '/' + pageIdx + '/' + pageSize;
     return this.http.get<TokenInfoList>(reqUrl);
   }
 
   getTokenByName(id: string): Observable<TokenTableItem> {
-    const reqUrl: string = environment.backendURL + '/contract/get_token_info/' + id;
+    const reqUrl: string = environment.backendURL() + '/contract/get_token_info/' + id;
     return this.http.get<TokenTableItem>(reqUrl);
   }
 }

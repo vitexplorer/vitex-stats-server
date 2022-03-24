@@ -33,7 +33,7 @@ export class DashboardMarketcapComponent implements OnInit, AfterViewInit {
     let endDate = new Date();
     // 2 week ago
     let startDate = new Date(endDate.getTime() - (1000 * 60 * 60 * 24 * 14));
-    this.statisticService.getMarketStatistic(startDate, endDate).pipe(
+    this.statisticService.getMarketStatistic(startDate, endDate, 'btc').pipe(
       catchError(() => of({
         'prices': [[startDate.getTime(), 1]],
         'market_caps': [[startDate.getTime(), 1]],
@@ -49,7 +49,7 @@ export class DashboardMarketcapComponent implements OnInit, AfterViewInit {
         //   }))
         // };
         let market_caps = {
-          name: 'Market Cap (USD)',
+          name: 'Market Cap (BTC)',
           series: marketStatistic.market_caps.map(market_cap => {
             return {
               name: new Date(market_cap[0]),
@@ -58,7 +58,7 @@ export class DashboardMarketcapComponent implements OnInit, AfterViewInit {
           })
         };
         let total_volumes = {
-          name: 'Volume (USD)',
+          name: 'Volume (BTC)',
           series: marketStatistic.total_volumes.map(total_volume => {
             return {
               name: new Date(total_volume[0]),

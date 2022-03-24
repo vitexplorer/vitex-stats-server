@@ -38,6 +38,10 @@ export class SnapshotTableDataSource extends DataSource<Snapshot> {
         pageSize: number = 20): void {
 
         this.loadingSubject.next(true);
+        if (sortOrder == '') {
+            sortOrder = 'desc';
+        }
+
         this.snapshotService.getAccountSnapshots(account,
             sortOrder, sortColumn, pageIndex, pageSize).pipe(
                 catchError(() => of({

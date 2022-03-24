@@ -16,7 +16,6 @@ export class DashboardSnapshotComponent implements OnInit {
   constructor(private snapshotService: SnapshotService) { }
 
   ngOnInit(): void {
-    this.refresh();
     this.updateSub = interval(1500).subscribe((val) => {
       this.refresh();
     });
@@ -37,6 +36,12 @@ export class DashboardSnapshotComponent implements OnInit {
         }
       }
     );
+  }
+
+  ngOnDestroy(): void {
+    if (this.updateSub) {
+      this.updateSub.unsubscribe();
+    }
   }
 
 }

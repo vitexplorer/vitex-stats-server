@@ -4,9 +4,12 @@
 
 export const environment = {
   production: false,
-  backendURL: 'http://127.0.0.1:5000',
+  backendURL: function () {
+    return 'http://' + document.location.hostname + ':5000';
+  },
   coinGeckoURL: 'https://api.coingecko.com/api/v3',
 };
+
 
 /*
  * For easier debugging in development mode, you can import the following file

@@ -20,7 +20,7 @@ export class AccountService {
       sortField = 'address';
     }
     let startIdx = pageSize * pageIndex;
-    const reqUrl: string = environment.backendURL + '/ledger/get_accounts/' + order + '/' + sortField + '/' + startIdx + '/' + pageSize;
+    const reqUrl: string = environment.backendURL() + '/ledger/get_accounts/' + order + '/' + sortField + '/' + startIdx + '/' + pageSize;
     return this.http.get<VitexAccountPage>(reqUrl);
   }
 
@@ -32,12 +32,12 @@ export class AccountService {
       sortField = 'address';
     }
     let startIdx = pageSize * pageIndex;
-    const reqUrl: string = environment.backendURL + '/ledger/search_accounts/' + address + '/' + order + '/' + sortField + '/' + startIdx + '/' + pageSize;
+    const reqUrl: string = environment.backendURL() + '/ledger/search_accounts/' + address + '/' + order + '/' + sortField + '/' + startIdx + '/' + pageSize;
     return this.http.get<VitexAccountPage>(reqUrl);
   }
 
-  getActiveAccounts(): Observable<VitexAccountDetail[]> {
-    return this.getAccountsByPage('desc', 'lastTransactionDate', 0, 5).pipe(
+  getActiveAccounts(count: number = 3): Observable<VitexAccountDetail[]> {
+    return this.getAccountsByPage('desc', 'lastTransactionDate', 0, count).pipe(
       catchError(() => of({ accounts: [], count: 0 })),
       map(
         res => {
@@ -47,7 +47,7 @@ export class AccountService {
   }
 
   getAccountDetail(address: string): Observable<VitexAccountDetail> {
-    const reqUrl: string = environment.backendURL + '/ledger/get_account/' + address;
+    const reqUrl: string = environment.backendURL() + '/ledger/get_account/' + address;
     return this.http.get(reqUrl).pipe(
       map(res => {
         let result: ResponseAccountDetail = res as ResponseAccountDetail;
@@ -77,14 +77,14 @@ export class AccountService {
   }
 
   getAccountBalance(address: string): Observable<ResponseAccountBalance> {
-    const reqUrl: string = environment.backendURL + '/ledger/get_account/' + address;
+    const reqUrl: string = environment.backendURL() + '/ledger/get_account/' + address;
     return this.http.get<ResponseAccountBalance>(reqUrl);
   }
 
   getTopTokenHoldersBalances(tokenId: string,
     pageIndex: number = 0,
     pageSize: number = 20): Observable<ResponseTokenAccountBalance> {
-    const reqUrl: string = environment.backendURL + '/ledger/get_token_balanced_desc/' + tokenId + '/' + pageIndex + '/' + pageSize;
+    const reqUrl: string = environment.backendURL() + '/ledger/get_token_balanced_desc/' + tokenId + '/' + pageIndex + '/' + pageSize;
     return this.http.get<ResponseTokenAccountBalance>(reqUrl);
   }
 }
